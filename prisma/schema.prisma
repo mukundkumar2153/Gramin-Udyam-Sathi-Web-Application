@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  password    String
+  role        Role     @default(USER)
+  language    String   @default("mr") // "mr", "hi", "en"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  profiles          EntrepreneurProfile[]
+  savedSchemes      SavedScheme[]
+  searches          SearchLog[]
+  chatConversations ChatConversation[]
+}
+
+model EntrepreneurProfile {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  district         String
+  taluka           String?
+  village          String?
+  businessType     String   // Agriculture, Dairy, Food Processing, etc.
+  businessStage    String   // Idea, New, Existing, Expansion
+  investmentRange  String   // Under 1 Lakh, 1-5 Lakhs, 5-25 Lakhs, Above 25 Lakhs
+  entrepreneurType String   // General, Women, Youth, SHG/FPO, SC/ST
+  requirements     String[] // Loan, Subsidy, Training, Equipment, etc.
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  nameEn      String
+  nameHi      String
+  nameMr      String
+  description String?
+  icon        String?  // Lucide icon name
+  createdAt   DateTime @default(now())
+  
+  schemes     Scheme[]
+}
+
+model District {
+  id         String   @id @default(uuid())
+  slug       String   @unique
+  nameEn     String
+  nameHi     String
+  nameMr     String
+  region     String   // Paschim Maharashtra, Vidarbha, Marathwada, Konkan, Khandesh
+  dicAddress String?  // District Industries Centre Address
+  dicContact String?
+
+  schemes    SchemeDistrict[]
+}
+
+model Scheme {
+  id                     String   @id @default(uuid())
+  nameEn                 String
+  nameHi                 String
+  nameMr                 String
+  descriptionEn          String   @db.Text
+  descriptionHi          String   @db.Text
+  descriptionMr          String   @db.Text
+  
+  categoryId             String
+  category               Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  
+  targetUsersEn          String
+  targetUsersHi          String
+  targetUsersMr          String
+  
+  benefitsJson           Json     // Array of benefit items in en, hi, mr
+  eligibilityJson        Json     // Eligibility rules & criteria
+  documentsJson          Json     // Array of required documents
+  applicationProcessJson Json     // Step by step process
+  
+  officialUrl            String
+  sourceName             String   @default("Government of Maharashtra / Govt of India")
+  applicableScope        String   @default("Maharashtra State") // Maharashtra State or All India
+  
+  lastVerifiedAt         DateTime @default(now())
+  status                 String   @default("ACTIVE") // ACTIVE, INACTIVE, DRAFT
+  viewCount              Int      @default(0)
+  
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  districts              SchemeDistrict[]
+  savedBy                SavedScheme[]
+}
+
+model SchemeDistrict {
+  schemeId   String
+  districtId String
+
+  scheme     Scheme   @relation(fields: [schemeId], references: [id], onDelete: Cascade)
+  district   District @relation(fields: [districtId], references: [id], onDelete: Cascade)
+
+  @@id([schemeId, districtId])
+}
+
+model SavedScheme {
+  id        String   @id @default(uuid())
+  userId    String
+  schemeId  String
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scheme    Scheme   @relation(fields: [schemeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, schemeId])
+}
+
+model SearchLog {
+  id           String   @id @default(uuid())
+  userId       String?
+  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  district     String?
+  businessType String?
+  requirements String?
+  createdAt    DateTime @default(now())
+}
+
+model ChatConversation {
+  id        String        @id @default(uuid())
+  userId    String?
+  user      User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt DateTime      @default(now())
+
+  messages  ChatMessage[]
+}
+
+model ChatMessage {
+  id             String           @id @default(uuid())
+  conversationId String
+  conversation   ChatConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  role           String           // "user" or "assistant"
+  message        String           @db.Text
+  createdAt      DateTime         @default(now())
+}

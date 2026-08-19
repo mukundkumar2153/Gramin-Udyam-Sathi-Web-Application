@@ -1,0 +1,66 @@
+export const en = {
+  brandName: "Gramin Udyam Sathi",
+  tagline: "Right government scheme information in the right language for Maharashtra's rural entrepreneurs.",
+  heroHeading: "Find the Right Government Scheme for Your Business",
+  heroSubheading: "Government scheme details in simple language — tailored to your business, district, and exact requirements.",
+  findMyScheme: "Find My Scheme",
+  exploreAllSchemes: "Explore All Schemes",
+  
+  quickFinderTitle: "What business do you need assistance for?",
+  findSuitableSchemes: "Find Suitable Schemes",
+  
+  featuresTitle: "Why Choose Gramin Udyam Sathi?",
+  verifiedInfo: "Verified Information",
+  verifiedInfoDesc: "Government schemes compiled & verified in one accessible location.",
+  localLanguages: "Multilingual Support",
+  localLanguagesDesc: "Simple guidance available in Marathi, Hindi, and English.",
+  smartRec: "Smart Recommendations",
+  smartRecDesc: "Personalized match score based on your location, business stage & profile.",
+  simpleGuidance: "Clear Guidance",
+  simpleGuidanceDesc: "Eligibility, subsidies, and application steps clearly explained.",
+  
+  popularSchemes: "Popular Government Schemes",
+  viewDetails: "View Details",
+  
+  howItWorks: "How It Works",
+  step1Title: "1. Tell us about your business",
+  step1Desc: "Select your sector, business stage, and investment scale.",
+  step2Title: "2. Choose district & needs",
+  step2Desc: "Select your Maharashtra district and loan/subsidy requirements.",
+  step3Title: "3. Smart Match Engine",
+  step3Desc: "Our system ranks relevant schemes by transparent match score.",
+  step4Title: "4. Apply with Confidence",
+  step4Desc: "Review required documents and click to official portal.",
+  
+  districtExplorerTitle: "36 Districts of Maharashtra",
+  districtExplorerSub: "Explore district-specific industries centres (DIC) & localized rural schemes",
+  
+  aiAssistantTitle: "Gramin Udyam AI Assistant",
+  aiAssistantSub: "Ask questions in your natural language. Our AI queries verified database records.",
+  askAI: "Ask AI Sahayak",
+  
+  navHome: "Home",
+  navFindSchemes: "Find Schemes",
+  navAllSchemes: "All Schemes",
+  navDistricts: "Districts",
+  navAIAssistant: "AI Assistant",
+  navResources: "Resources",
+  navAbout: "About Us",
+  navLogin: "Login / Register",
+  navAdmin: "Admin Panel",
+  navDashboard: "My Dashboard",
+
+  searchPlaceholder: "Search scheme name, category, or business type...",
+  categoryFilter: "Category",
+  districtFilter: "District",
+  stageFilter: "Business Stage",
+  requirementFilter: "Requirement",
+
+  whyRecommended: "Why was this recommended?",
+  matchScore: "Match Score",
+  officialWebsite: "Visit Official Application Website",
+  lastVerified: "Last Verified Date",
+  docChecklist: "Required Documents Checklist",
+  
+  disclaimer: "This platform is an independent educational portal and not an official government website. For final scheme eligibility and official applications, please verify through official government sources.",
+};

@@ -1,0 +1,66 @@
+export const hi = {
+  brandName: "ग्रामीण उद्यम साथी",
+  tagline: "महाराष्ट्र के ग्रामीण उद्यमियों के लिए सरकारी योजनाओं की सही जानकारी, सही भाषा में।",
+  heroHeading: "अपने बिजनेस के लिए सही सरकारी योजना खोजिए",
+  heroSubheading: "Government schemes की जानकारी अब simple language में — आपके बिजनेस, डिस्ट्रिक्ट और जरूरत के हिसाब से।",
+  findMyScheme: "मेरी योजना खोजें",
+  exploreAllSchemes: "सभी योजनाएं देखें",
+  
+  quickFinderTitle: "आप किस बिजनेस के लिए मदद चाहते हैं?",
+  findSuitableSchemes: "उपयुक्त योजनाएं खोजें",
+  
+  featuresTitle: "ग्रामीण उद्यम साथी क्यों चुनें?",
+  verifiedInfo: "सत्यापित जानकारी",
+  verifiedInfoDesc: "सरकारी योजनाओं की प्रामाणिक जानकारी एक स्थान पर।",
+  localLanguages: "स्थानीय भाषाएं",
+  localLanguagesDesc: "मराठी, हिंदी और अंग्रेजी में आसान भाषा समर्थन।",
+  smartRec: "स्मार्ट सिफारिशें",
+  smartRecDesc: "आपके प्रोफ़ाइल, जिले और आवश्यकता के अनुसार योजनाएं।",
+  simpleGuidance: "सरल मार्गदर्शन",
+  simpleGuidanceDesc: "पात्रता, सब्सिडी और आवेदन प्रक्रिया के स्पष्ट चरण।",
+  
+  popularSchemes: "लोकप्रिय योजनाएं",
+  viewDetails: "विवरण देखें",
+  
+  howItWorks: "यह कैसे काम करता है?",
+  step1Title: "१. अपने व्यवसाय के बारे में बताएं",
+  step1Desc: "अपना व्यवसाय प्रकार, चरण और निवेश चुनें।",
+  step2Title: "२. जिला और आवश्यकताएं चुनें",
+  step2Desc: "ऋण, सब्सिडी या प्रशिक्षण सहायता चुनें।",
+  step3Title: "३. सिस्टम योजनाएं खोजता है",
+  step3Desc: "स्मार्ट एल्गोरिदम सबसे प्रासंगिक योजनाएं रैंक करता है।",
+  step4Title: "४. पात्रता और आवेदन समझें",
+  step4Desc: "दस्तावेज़, पात्रता और आधिकारिक आवेदन लिंक देखें।",
+  
+  districtExplorerTitle: "महाराष्ट्र के ३६ जिले — जिला अनुसार योजनाएं",
+  districtExplorerSub: "अपने जिले के जिला उद्योग केंद्र (DIC) और स्थानीय सहायता खोजें",
+  
+  aiAssistantTitle: "ग्रामीण उद्यम AI सहायक",
+  aiAssistantSub: "अपनी भाषा में सवाल पूछें। हमारा AI डेटाबेस से सीधे सटीक उत्तर देता है।",
+  askAI: "AI से पूछें",
+  
+  navHome: "मुख्य पृष्ठ",
+  navFindSchemes: "योजना खोजें",
+  navAllSchemes: "सभी योजनाएं",
+  navDistricts: "जिले",
+  navAIAssistant: "AI सहायक",
+  navResources: "संसाधन",
+  navAbout: "हमारे बारे में",
+  navLogin: "लॉगिन / पंजीकरण",
+  navAdmin: "एडमिन पैनल",
+  navDashboard: "मेरा प्रोफ़ाइल",
+
+  searchPlaceholder: "योजना का नाम या व्यवसाय खोजें...",
+  categoryFilter: "श्रेणी चुनें",
+  districtFilter: "जिला चुनें",
+  stageFilter: "व्यवसाय चरण",
+  requirementFilter: "आवश्यकता",
+
+  whyRecommended: "यह सिफारिश क्यों की गई?",
+  matchScore: "मैच प्रतिशत",
+  officialWebsite: "आधिकारिक आवेदन वेबसाइट पर जाएं",
+  lastVerified: "अंतिम सत्यापन तिथि",
+  docChecklist: "आवश्यक दस्तावेज चेकलिस्ट",
+  
+  disclaimer: "यह प्लेटफ़ॉर्म सरकारी वेबसाइट नहीं है। योजना पात्रता, लाभ और आवेदन जानकारी के लिए संबंधित आधिकारिक सरकारी स्रोत (Official Portal) को ही अंतिम संदर्भ मानें।",
+};
