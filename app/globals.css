@@ -3,20 +3,94 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 15, 23, 42;
-  --background-start-rgb: 248, 250, 252;
-  --background-end-rgb: 255, 255, 255;
+  --bg-primary: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --accent-brand: #16a34a;
+  --accent-hover: #15803d;
+  --border-color: #e2e8f0;
+}
+
+/* Theme 1: Gramin (Default Emerald/Saffron) */
+html[data-theme="gramin"] {
+  --bg-primary: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --accent-brand: #16a34a;
+}
+
+/* Theme 2: Saffron (Surajya Golden / Warm Saffron) */
+html[data-theme="saffron"] {
+  --bg-primary: #fffbeb;
+  --bg-card: #ffffff;
+  --text-main: #451a03;
+  --accent-brand: #ea580c;
+}
+
+/* Theme 3: Shetkari (Deep Forest Green & Mint) */
+html[data-theme="shetkari"] {
+  --bg-primary: #f0fdf4;
+  --bg-card: #ffffff;
+  --text-main: #052e16;
+  --accent-brand: #15803d;
+}
+
+/* Theme 4: Neer (Modern Navy / Sky Blue) */
+html[data-theme="neer"] {
+  --bg-primary: #f0f9ff;
+  --bg-card: #ffffff;
+  --text-main: #0c4a6e;
+  --accent-brand: #0284c7;
+}
+
+/* Theme 5: Dark (Ratrak Midnight / Dark Mode) */
+html[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-card: #1e293b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-brand: #22c55e;
+  --border-color: #334155;
+}
+
+html[data-theme="dark"] body {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .bg-white {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+html[data-theme="dark"] .bg-slate-50 {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .text-slate-900,
+html[data-theme="dark"] .text-slate-800,
+html[data-theme="dark"] .text-slate-700 {
+  color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .text-slate-600,
+html[data-theme="dark"] .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .border-slate-200,
+html[data-theme="dark"] .border-slate-100 {
+  border-color: #334155 !important;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--bg-primary);
+  color: var(--text-main);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .rural-pattern {
@@ -26,7 +100,6 @@ body {
   background-position: 0 0, 15px 15px;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -38,8 +111,4 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
 }

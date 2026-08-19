@@ -34,13 +34,19 @@ interface SchemeCardProps {
 export default function SchemeCard({ scheme, matchScore, onWhyRecommended }: SchemeCardProps) {
   const { language, t } = useLanguage();
 
-  const name = language === 'hi' ? scheme.nameHi : language === 'mr' ? scheme.nameMr : scheme.nameEn;
-  const description = language === 'hi' ? scheme.descriptionHi : language === 'mr' ? scheme.descriptionMr : scheme.descriptionEn;
-  const targetUsers = language === 'hi' ? scheme.targetUsersHi : language === 'mr' ? scheme.targetUsersMr : scheme.targetUsersEn;
+  // STRIKLTY SHOW ONLY SELECTED LANGUAGE TEXT
+  const name = language === 'hi' ? (scheme.nameHi || scheme.nameEn) : language === 'mr' ? (scheme.nameMr || scheme.nameEn) : scheme.nameEn;
+  const description = language === 'hi' ? (scheme.descriptionHi || scheme.descriptionEn) : language === 'mr' ? (scheme.descriptionMr || scheme.descriptionEn) : scheme.descriptionEn;
+  const targetUsers = language === 'hi' ? (scheme.targetUsersHi || scheme.targetUsersEn) : language === 'mr' ? (scheme.targetUsersMr || scheme.targetUsersEn) : scheme.targetUsersEn;
   const categoryName = scheme.category ? (language === 'hi' ? scheme.category.nameHi : language === 'mr' ? scheme.category.nameMr : scheme.category.nameEn) : "General";
 
-  const mainBenefit = Array.isArray(scheme.benefitsJson) && scheme.benefitsJson.length > 0
-    ? (scheme.benefitsJson[0][language] || scheme.benefitsJson[0].mr || scheme.benefitsJson[0].en)
+  // Pick main benefit in selected language only
+  const mainBenefitItem = Array.isArray(scheme.benefitsJson) && scheme.benefitsJson.length > 0
+    ? scheme.benefitsJson[0]
+    : null;
+
+  const mainBenefit = mainBenefitItem
+    ? (mainBenefitItem[language] || mainBenefitItem.mr || mainBenefitItem.en)
     : null;
 
   return (
@@ -97,7 +103,7 @@ export default function SchemeCard({ scheme, matchScore, onWhyRecommended }: Sch
           </div>
         </div>
 
-        {/* Short Description */}
+        {/* Short Description in Selected Language */}
         <p className="text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed">
           {description}
         </p>
@@ -107,16 +113,22 @@ export default function SchemeCard({ scheme, matchScore, onWhyRecommended }: Sch
           <div className="bg-amber-50/80 border border-amber-200/70 p-3 rounded-xl flex items-start gap-2.5">
             <Award className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <div className="text-xs font-bold text-amber-900 leading-tight">
-              <span className="font-extrabold text-amber-700 block mb-0.5">प्रमुख फायदा (Key Benefit):</span>
+              <span className="font-extrabold text-amber-700 block mb-0.5">
+                {language === 'hi' ? 'मुख्य लाभ:' : language === 'mr' ? 'प्रमुख फायदा:' : 'Key Benefit:'}
+              </span>
               {mainBenefit}
             </div>
           </div>
         )}
 
-        {/* Target Audience */}
+        {/* Target Audience in Selected Language */}
         <div className="text-xs text-slate-500 bg-slate-50 p-2.5 rounded-lg border border-slate-100 flex items-center gap-2">
           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-          <span className="truncate"><strong className="text-slate-700">पात्र लाभार्थी:</strong> {targetUsers}</span>
+          <span className="truncate">
+            <strong className="text-slate-700">
+              {language === 'hi' ? 'पात्र लाभार्थी:' : language === 'mr' ? 'पात्र लाभार्थी:' : 'Target Beneficiaries:'}
+            </strong> {targetUsers}
+          </span>
         </div>
 
       </div>
@@ -125,7 +137,7 @@ export default function SchemeCard({ scheme, matchScore, onWhyRecommended }: Sch
       <div className="px-5 py-3.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
         <span className="text-xs text-slate-500 flex items-center gap-1 font-semibold">
           <FileText className="w-3.5 h-3.5 text-slate-400" />
-          <span>पडताळलेली माहिती</span>
+          <span>{language === 'hi' ? 'सत्यापित जानकारी' : language === 'mr' ? 'पडताळलेली माहिती' : 'Verified Information'}</span>
         </span>
 
         <Link
