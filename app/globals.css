@@ -2,72 +2,126 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS Variables per Theme */
 :root {
-  --bg-primary: #f8fafc;
+  --bg-page: #f8fafc;
+  --bg-header: #ffffff;
   --bg-card: #ffffff;
+  --bg-input: #f1f5f9;
   --text-main: #0f172a;
   --text-muted: #64748b;
-  --accent-brand: #16a34a;
-  --accent-hover: #15803d;
+  --text-header: #0f172a;
   --border-color: #e2e8f0;
+  --brand-primary: #16a34a;
+  --brand-hover: #15803d;
+  --brand-light: #dcfce7;
+  --brand-text: #14532d;
 }
 
-/* Theme 1: Gramin (Default Emerald/Saffron) */
+/* 🌿 Theme 1: Gramin Emerald (Default Rural) */
 html[data-theme="gramin"] {
-  --bg-primary: #f8fafc;
+  --bg-page: #f8fafc;
+  --bg-header: #ffffff;
   --bg-card: #ffffff;
+  --bg-input: #f1f5f9;
   --text-main: #0f172a;
-  --accent-brand: #16a34a;
+  --text-muted: #64748b;
+  --text-header: #0f172a;
+  --border-color: #e2e8f0;
+  --brand-primary: #16a34a;
+  --brand-hover: #15803d;
+  --brand-light: #f0fdf4;
+  --brand-text: #166534;
 }
 
-/* Theme 2: Saffron (Surajya Golden / Warm Saffron) */
+/* ☀️ Theme 2: Surajya Saffron (Golden Sunset) */
 html[data-theme="saffron"] {
-  --bg-primary: #fffbeb;
+  --bg-page: #fffbf0;
+  --bg-header: #ffffff;
   --bg-card: #ffffff;
+  --bg-input: #fef3c7;
   --text-main: #451a03;
-  --accent-brand: #ea580c;
+  --text-muted: #78350f;
+  --text-header: #451a03;
+  --border-color: #fde68a;
+  --brand-primary: #ea580c;
+  --brand-hover: #c2410c;
+  --brand-light: #fff7ed;
+  --brand-text: #9a3412;
 }
 
-/* Theme 3: Shetkari (Deep Forest Green & Mint) */
+/* 🌾 Theme 3: Shetkari Green (Deep Forest Crop) */
 html[data-theme="shetkari"] {
-  --bg-primary: #f0fdf4;
+  --bg-page: #f0fdf4;
+  --bg-header: #ffffff;
   --bg-card: #ffffff;
+  --bg-input: #dcfce7;
   --text-main: #052e16;
-  --accent-brand: #15803d;
+  --text-muted: #166534;
+  --text-header: #052e16;
+  --border-color: #bbf7d0;
+  --brand-primary: #15803d;
+  --brand-hover: #166534;
+  --brand-light: #f0fdf4;
+  --brand-text: #14532d;
 }
 
-/* Theme 4: Neer (Modern Navy / Sky Blue) */
+/* 💧 Theme 4: Neer Blue (Ocean Navy) */
 html[data-theme="neer"] {
-  --bg-primary: #f0f9ff;
+  --bg-page: #f0f9ff;
+  --bg-header: #ffffff;
   --bg-card: #ffffff;
+  --bg-input: #e0f2fe;
   --text-main: #0c4a6e;
-  --accent-brand: #0284c7;
+  --text-muted: #0369a1;
+  --text-header: #0c4a6e;
+  --border-color: #bae6fd;
+  --brand-primary: #0284c7;
+  --brand-hover: #0369a1;
+  --brand-light: #f0f9ff;
+  --brand-text: #075985;
 }
 
-/* Theme 5: Dark (Ratrak Midnight / Dark Mode) */
+/* 🌙 Theme 5: Ratrak Dark Mode (Midnight Dark) */
 html[data-theme="dark"] {
-  --bg-primary: #0f172a;
-  --bg-card: #1e293b;
+  --bg-page: #0b1329;
+  --bg-header: #131f3d;
+  --bg-card: #17254d;
+  --bg-input: #1e2e5c;
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
-  --accent-brand: #22c55e;
-  --border-color: #334155;
+  --text-header: #f8fafc;
+  --border-color: #27396b;
+  --brand-primary: #22c55e;
+  --brand-hover: #16a34a;
+  --brand-light: #16382b;
+  --brand-text: #4ade80;
 }
 
-html[data-theme="dark"] body {
-  background-color: #0f172a;
-  color: #f8fafc;
+body {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Dark Mode Global Component Fixes */
+html[data-theme="dark"] header {
+  background-color: #131f3d !important;
+  border-color: #27396b !important;
 }
 
 html[data-theme="dark"] .bg-white {
-  background-color: #1e293b !important;
+  background-color: #17254d !important;
   color: #f8fafc !important;
-  border-color: #334155 !important;
+  border-color: #27396b !important;
 }
 
-html[data-theme="dark"] .bg-slate-50 {
-  background-color: #0f172a !important;
+html[data-theme="dark"] .bg-slate-50,
+html[data-theme="dark"] .bg-slate-100 {
+  background-color: #131f3d !important;
   color: #f8fafc !important;
+  border-color: #27396b !important;
 }
 
 html[data-theme="dark"] .text-slate-900,
@@ -78,19 +132,21 @@ html[data-theme="dark"] .text-slate-700 {
 
 html[data-theme="dark"] .text-slate-600,
 html[data-theme="dark"] .text-slate-500 {
-  color: #94a3b8 !important;
+  color: #cbd5e1 !important;
 }
 
 html[data-theme="dark"] .border-slate-200,
-html[data-theme="dark"] .border-slate-100 {
-  border-color: #334155 !important;
+html[data-theme="dark"] .border-slate-100,
+html[data-theme="dark"] .border-slate-300 {
+  border-color: #27396b !important;
 }
 
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-main);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+  background-color: #1e2e5c !important;
+  color: #ffffff !important;
+  border-color: #3b508a !important;
 }
 
 .rural-pattern {
@@ -105,10 +161,10 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #131f3d;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #3b508a;
   border-radius: 4px;
 }

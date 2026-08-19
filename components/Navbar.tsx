@@ -32,32 +32,32 @@ export default function Navbar() {
   const themes: { id: Theme; nameMr: string; nameEn: string; colorBg: string; icon: any }[] = [
     { id: "gramin", nameMr: "ग्रामीण (Emerald)", nameEn: "Gramin Emerald", colorBg: "bg-emerald-600", icon: Sprout },
     { id: "saffron", nameMr: "सुराज्य (Saffron)", nameEn: "Surajya Saffron", colorBg: "bg-amber-500", icon: Sun },
-    { id: "shetkari", nameMr: "शेतकरी (Forest Green)", nameEn: "Shetkari Green", colorBg: "bg-green-700", icon: Sprout },
+    { id: "shetkari", nameMr: "शेतकरी (Forest)", nameEn: "Shetkari Green", colorBg: "bg-green-700", icon: Sprout },
     { id: "neer", nameMr: "नीर (Navy Blue)", nameEn: "Neer Blue", colorBg: "bg-sky-600", icon: Droplets },
     { id: "dark", nameMr: "रात्रक (Dark Mode)", nameEn: "Ratrak Dark", colorBg: "bg-slate-900", icon: Moon },
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-colors">
+    <header className="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-xs transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18 py-3">
           
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" prefetch={true} className="flex items-center gap-3 group">
             <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-600 to-green-700 text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
               <Sprout className="w-6 h-6 stroke-[2.5]" />
             </div>
             <div>
-              <span className="font-extrabold text-xl text-slate-900 block leading-tight tracking-tight">
+              <span className="font-extrabold text-xl text-slate-900 dark:text-white block leading-tight tracking-tight">
                 {t.brandName}
               </span>
-              <span className="text-[11px] font-bold text-emerald-600 tracking-wide block">
+              <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 tracking-wide block">
                 Maharashtra • Gramin Portal
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links (Instant Prefetch enabled) */}
           <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -66,12 +66,13 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  prefetch={true}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
                     link.highlight
                       ? "bg-emerald-600 text-white shadow-xs hover:bg-emerald-700"
                       : isActive
-                      ? "bg-emerald-50 text-emerald-800"
-                      : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                      ? "bg-emerald-50 text-emerald-800 dark:bg-slate-800 dark:text-emerald-400 font-extrabold"
+                      : "text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -88,48 +89,45 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setThemeDropdownOpen(!themeDropdownOpen)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all border border-slate-200"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 rounded-xl text-xs font-bold transition-all border border-slate-200 dark:border-slate-700"
                 title="Change Theme (थीम बदला)"
               >
-                <Palette className="w-4 h-4 text-emerald-600" />
+                <Palette className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>थीम (Theme)</span>
               </button>
 
               {themeDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 space-y-1 animate-in fade-in zoom-in-95 duration-150">
-                  <div className="px-3 py-1.5 text-[10px] font-black text-slate-400 uppercase tracking-wider">
+                <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-2 z-50 space-y-1 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="px-3 py-1.5 text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                     Select Theme
                   </div>
-                  {themes.map((th) => {
-                    const ThIcon = th.icon;
-                    return (
-                      <button
-                        key={th.id}
-                        onClick={() => {
-                          setTheme(th.id);
-                          setThemeDropdownOpen(false);
-                        }}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all ${
-                          theme === th.id
-                            ? "bg-emerald-50 text-emerald-900 font-extrabold"
-                            : "text-slate-700 hover:bg-slate-100"
-                        }`}
-                      >
-                        <div className="flex items-center gap-2">
-                          <div className={`w-3.5 h-3.5 rounded-full ${th.colorBg}`} />
-                          <span>{language === 'en' ? th.nameEn : th.nameMr}</span>
-                        </div>
-                        {theme === th.id && <span className="text-emerald-600 font-bold">✓</span>}
-                      </button>
-                    );
-                  })}
+                  {themes.map((th) => (
+                    <button
+                      key={th.id}
+                      onClick={() => {
+                        setTheme(th.id);
+                        setThemeDropdownOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+                        theme === th.id
+                          ? "bg-emerald-50 dark:bg-slate-700 text-emerald-900 dark:text-emerald-300 font-extrabold border border-emerald-200 dark:border-emerald-600"
+                          : "text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className={`w-3.5 h-3.5 rounded-full ${th.colorBg}`} />
+                        <span>{language === 'en' ? th.nameEn : th.nameMr}</span>
+                      </div>
+                      {theme === th.id && <span className="text-emerald-600 dark:text-emerald-400 font-bold">✓</span>}
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
 
             {/* Language Switcher */}
-            <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
-              <Globe className="w-4 h-4 text-emerald-700 ml-2 mr-1" />
+            <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
+              <Globe className="w-4 h-4 text-emerald-700 dark:text-emerald-400 ml-2 mr-1" />
               {languages.map((lang) => (
                 <button
                   key={lang.code}
@@ -137,7 +135,7 @@ export default function Navbar() {
                   className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
                     language === lang.code
                       ? "bg-emerald-600 text-white shadow-xs"
-                      : "text-slate-600 hover:text-slate-900"
+                      : "text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   {lang.label}
@@ -148,31 +146,32 @@ export default function Navbar() {
             {/* User Dashboard / Login */}
             <Link
               href="/login"
-              className="flex items-center gap-1.5 px-3 py-2 text-sm font-bold text-slate-700 hover:text-emerald-700 rounded-lg hover:bg-emerald-50 transition-colors"
+              prefetch={true}
+              className="flex items-center gap-1.5 px-3 py-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors"
             >
-              <User className="w-4 h-4 text-emerald-600" />
+              <User className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>{t.navLogin}</span>
             </Link>
 
             <Link
               href="/admin/login"
-              className="flex items-center gap-1 px-2.5 py-2 text-xs font-bold text-slate-500 hover:text-emerald-800 bg-slate-100 hover:bg-emerald-100/50 rounded-lg transition-colors"
+              prefetch={true}
+              className="flex items-center gap-1 px-2.5 py-2 text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-emerald-100/50 rounded-lg transition-colors border border-slate-200 dark:border-slate-700"
               title="Admin Portal"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
               <span>Admin</span>
             </Link>
           </div>
 
           {/* Mobile menu trigger */}
           <div className="flex lg:hidden items-center gap-2">
-            {/* Quick Language Toggle on Mobile */}
             <button
               onClick={() => {
                 const nextLang: Record<Language, Language> = { mr: "hi", hi: "en", en: "mr" };
                 setLanguage(nextLang[language]);
               }}
-              className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold bg-emerald-50 text-emerald-800 rounded-lg border border-emerald-200"
+              className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold bg-emerald-50 text-emerald-800 dark:bg-slate-800 dark:text-emerald-400 rounded-lg border border-emerald-200 dark:border-slate-700"
             >
               <Globe className="w-3.5 h-3.5" />
               <span>{language === 'mr' ? 'मराठी' : language === 'hi' ? 'हिंदी' : 'EN'}</span>
@@ -180,7 +179,7 @@ export default function Navbar() {
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-700 hover:bg-slate-100 rounded-xl"
+              className="p-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl"
               aria-label="Toggle Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -192,7 +191,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-slate-200 bg-white px-4 pt-3 pb-6 space-y-4">
+        <div className="lg:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-6 space-y-4">
           <div className="grid grid-cols-1 gap-1">
             {navLinks.map((link) => {
               const Icon = link.icon;
@@ -200,11 +199,12 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  prefetch={true}
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm ${
                     pathname === link.href
                       ? "bg-emerald-600 text-white"
-                      : "text-slate-700 hover:bg-slate-100"
+                      : "text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -214,9 +214,8 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Theme Selector Grid for Mobile */}
-          <div className="pt-3 border-t border-slate-100 space-y-2">
-            <span className="text-xs font-bold text-slate-500 block">थीम निवडा (Select Theme):</span>
+          <div className="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2">
+            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 block">थीम निवडा (Select Theme):</span>
             <div className="grid grid-cols-3 gap-1.5">
               {themes.map((th) => (
                 <button
@@ -225,53 +224,12 @@ export default function Navbar() {
                   className={`p-2 rounded-xl border text-[11px] font-bold text-center ${
                     theme === th.id
                       ? "bg-emerald-600 text-white border-emerald-600"
-                      : "bg-slate-50 text-slate-700 border-slate-200"
+                      : "bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700"
                   }`}
                 >
                   {th.nameMr.split(" ")[0]}
                 </button>
               ))}
-            </div>
-          </div>
-
-          {/* Language Switcher for Mobile */}
-          <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
-            <div className="flex items-center justify-between px-2">
-              <span className="text-xs font-semibold text-slate-500">भाषा निवडा (Language):</span>
-              <div className="flex gap-1">
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => setLanguage(lang.code)}
-                    className={`px-3 py-1 text-xs font-bold rounded-lg ${
-                      language === lang.code
-                        ? "bg-emerald-600 text-white"
-                        : "bg-slate-100 text-slate-700"
-                    }`}
-                  >
-                    {lang.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2 pt-2">
-              <Link
-                href="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-100 text-slate-800 text-sm font-bold rounded-xl"
-              >
-                <User className="w-4 h-4 text-emerald-600" />
-                <span>{t.navLogin}</span>
-              </Link>
-              <Link
-                href="/admin/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-1.5 px-4 py-2.5 bg-amber-50 text-amber-900 border border-amber-200 text-sm font-bold rounded-xl"
-              >
-                <ShieldCheck className="w-4 h-4 text-amber-600" />
-                <span>Admin Login</span>
-              </Link>
             </div>
           </div>
         </div>
