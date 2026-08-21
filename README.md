@@ -41,7 +41,7 @@ Gramin Udyam Sathi is a production-quality, responsive, mobile-first full-stack 
 
 - **Frontend**: Next.js 14 (App Router), React 18, TypeScript, Tailwind CSS, Lucide Icons.
 - **Backend**: Next.js RESTful API Routes (`/api/schemes`, `/api/recommendations`, `/api/districts`, `/api/chat`, `/api/auth`, `/api/admin/analytics`).
-- **Database**: Neon PostgreSQL Database (`postgresql://neondb_owner:npg_0slBMXQ8yWiz@ep-shiny-block-ayycvznp-pooler.c-5.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require`).
+- **Database**: Neon PostgreSQL Database. 
 - **ORM & Seeding**: Prisma v5.21.1 with relational schema.
 - **Authentication**: JWT & Session Cookies for Users and Admins.
 
@@ -62,21 +62,12 @@ npm install
 ### 3. Environment Configuration (`.env`)
 Create a `.env` file in the root directory:
 ```env
-DATABASE_URL="postgresql://neondb_owner:npg_0slBMXQ8yWiz@ep-shiny-block-ayycvznp-pooler.c-5.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-JWT_SECRET="gramin-udyam-sathi-secret-key-2026-production"
+DATABASE_URL="Database URL"
+JWT_SECRET="JWT SCERET KEY"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 
-### 4. Push Schema & Seed Database
-```bash
-# Push Prisma relational schema to Neon PostgreSQL
-npx prisma db push
-
-# Seed categories, 36 Maharashtra districts, authentic schemes & admin user
-npx prisma db seed
-```
-
-### 5. Run Local Development Server
+### 4. Run Local Development Server
 ```bash
 npm run dev
 ```
