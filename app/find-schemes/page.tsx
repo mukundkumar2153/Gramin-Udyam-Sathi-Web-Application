@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/components/LanguageContext";
 import SchemeCard from "@/components/SchemeCard";
+import { MAHARASHTRA_DISTRICTS } from "@/lib/data/districts";
 import {
   MapPin,
   Building2,
@@ -19,7 +20,7 @@ import {
 export default function FindSchemesPage() {
   const { t, language } = useLanguage();
   const [currentStep, setCurrentStep] = useState(1);
-  const [districts, setDistricts] = useState<any[]>([]);
+  const [districts, setDistricts] = useState<any[]>(MAHARASHTRA_DISTRICTS);
   const [loading, setLoading] = useState(false);
   const [recommendations, setRecommendations] = useState<any[]>([]);
   const [selectedSchemeForModal, setSelectedSchemeForModal] = useState<any | null>(null);

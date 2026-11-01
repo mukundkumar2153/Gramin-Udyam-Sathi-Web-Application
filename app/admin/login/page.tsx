@@ -6,7 +6,7 @@ import { ShieldCheck, Lock, Mail, ArrowRight } from "lucide-react";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({ email: "admin@graminudyam.in", password: "" });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -67,6 +67,7 @@ export default function AdminLoginPage() {
               <input
                 type="email"
                 required
+                placeholder="admin@graminudyam.in"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full pl-10 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-xs font-semibold text-white focus:ring-2 focus:ring-amber-500"
@@ -81,7 +82,7 @@ export default function AdminLoginPage() {
               <input
                 type="password"
                 required
-                placeholder="Admin@12345"
+                placeholder="••••••••"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 className="w-full pl-10 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-xs font-semibold text-white focus:ring-2 focus:ring-amber-500"
@@ -98,12 +99,6 @@ export default function AdminLoginPage() {
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
-
-        <div className="p-3 bg-slate-800/80 rounded-xl border border-slate-700/60 text-[11px] text-slate-400 space-y-1">
-          <div className="font-bold text-amber-400">Demo Admin Credentials:</div>
-          <div>Email: <code className="text-white">admin@graminudyam.in</code></div>
-          <div>Password: <code className="text-white">Admin@12345</code></div>
-        </div>
 
       </div>
     </div>

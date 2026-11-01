@@ -6,7 +6,7 @@ import { useLanguage } from "./LanguageContext";
 import { Sprout, ShieldAlert, ExternalLink, Heart } from "lucide-react";
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
     <footer className="bg-slate-900 text-slate-300 pt-12 pb-8 border-t border-slate-800 mt-20">
@@ -17,7 +17,7 @@ export default function Footer() {
           <ShieldAlert className="w-6 h-6 text-amber-400 shrink-0 mt-0.5" />
           <div className="text-xs sm:text-sm leading-relaxed">
             <span className="font-extrabold block text-amber-300 mb-1">
-              अस्वीकरण (Important Disclaimer):
+              {language === 'hi' ? "महत्वपूर्ण अस्वीकरण (Disclaimer):" : language === 'mr' ? "महत्त्वाचे अस्वीकरण (Disclaimer):" : "Important Disclaimer:"}
             </span>
             {t.disclaimer}
           </div>
@@ -32,21 +32,21 @@ export default function Footer() {
                 <Sprout className="w-5 h-5" />
               </div>
               <span className="font-extrabold text-lg text-white">
-                ग्रामीण उद्यम साथी
+                {t.brandName}
               </span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">
               {t.tagline}
             </p>
             <div className="text-xs text-emerald-400 font-semibold">
-              Maharashtra Rural Entrepreneurship Portal
+              {language === 'hi' ? "महाराष्ट्र ग्रामीण उद्यमिता पोर्टल" : language === 'mr' ? "महाराष्ट्र ग्रामीण उद्योजकता पोर्टल" : "Maharashtra Rural Entrepreneurship Portal"}
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              Quick Links
+              {t.quickLinks}
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
@@ -75,7 +75,7 @@ export default function Footer() {
           {/* Government Portals */}
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              Official Portals
+              {t.officialPortals}
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
@@ -128,10 +128,14 @@ export default function Footer() {
           {/* Contact / Project Info */}
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              Project Support
+              {t.projectSupport}
             </h4>
             <p className="text-xs text-slate-400 leading-relaxed mb-3">
-              College Engineering Demonstration Project designed for Maharashtra's rural business ecosystem.
+              {language === 'hi' 
+                ? "महाराष्ट्र के ग्रामीण व्यावसायिक पारिस्थितिकी तंत्र के लिए समर्पित पोर्टल।" 
+                : language === 'mr' 
+                ? "महाराष्ट्रातील ग्रामीण व्यावसायिक परिसंस्थेसाठी समर्पित पोर्टल." 
+                : "Dedicated Portal for Maharashtra's Rural Business Ecosystem."}
             </p>
             <div className="text-xs text-slate-400">
               <span className="font-bold text-slate-200">Email:</span> support@graminudyam.in
@@ -143,12 +147,12 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
           <div>
-            © {new Date().getFullYear()} Gramin Udyam Sathi. All rights reserved.
+            © {new Date().getFullYear()} Gramin Udyam Sathi. {t.copyright}
           </div>
           <div className="flex items-center gap-1">
-            <span>Built with</span>
+            <span>{language === 'hi' ? "निर्मित" : language === 'mr' ? "निर्मिती" : "Built with"}</span>
             <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500 inline" />
-            <span>for Maharashtra Entrepreneurs</span>
+            <span>{t.builtFor}</span>
           </div>
         </div>
 

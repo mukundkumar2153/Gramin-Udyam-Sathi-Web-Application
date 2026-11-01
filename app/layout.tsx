@@ -4,6 +4,8 @@ import { LanguageProvider } from "@/components/LanguageContext";
 import { ThemeProvider } from "@/components/ThemeContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import LoginModal from "@/components/LoginModal";
+import KeepAlive from "@/components/KeepAlive";
 
 export const metadata: Metadata = {
   title: "ग्रामीण उद्यम साथी | Gramin Udyam Sathi • Government Schemes for Rural Maharashtra",
@@ -24,6 +26,8 @@ export default function RootLayout({
             <main className="flex-1">
               {children}
             </main>
+            <LoginModal />
+            <KeepAlive />
             <Footer />
           </LanguageProvider>
         </ThemeProvider>

@@ -1,31 +1,43 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { calculateSchemeMatch, UserProfileQuery } from "@/lib/recommendation";
+import { STATIC_SCHEMES } from "@/lib/data/schemes";
 
 export async function POST(request: Request) {
   try {
     const userProfile: UserProfileQuery = await request.json();
 
-    // Log the search for analytics
-    await prisma.searchLog.create({
-      data: {
-        district: userProfile.district,
-        businessType: userProfile.businessType,
-        requirements: userProfile.requirements?.join(", "),
-      },
-    });
+    let schemes: any[] = [];
 
-    const schemes = await prisma.scheme.findMany({
-      where: { status: "ACTIVE" },
-      include: {
-        category: true,
-        districts: {
-          include: {
-            district: true,
+    if (process.env.DATABASE_URL && !process.env.DATABASE_URL.includes("YOUR_NEON_PASSWORD")) {
+      try {
+        await prisma.searchLog.create({
+          data: {
+            district: userProfile.district,
+            businessType: userProfile.businessType,
+            requirements: userProfile.requirements?.join(", "),
           },
-        },
-      },
-    });
+        });
+
+        schemes = await prisma.scheme.findMany({
+          where: { status: "ACTIVE" },
+          include: {
+            category: true,
+            districts: {
+              include: {
+                district: true,
+              },
+            },
+          },
+        });
+      } catch (err) {
+        // fallback
+      }
+    }
+
+    if (!schemes || schemes.length === 0) {
+      schemes = STATIC_SCHEMES;
+    }
 
     const results = schemes.map((scheme) => {
       const match = calculateSchemeMatch(scheme, userProfile);
@@ -49,9 +61,21 @@ export async function POST(request: Request) {
     });
   } catch (error: any) {
     console.error("POST /api/recommendations error:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to generate recommendations" },
-      { status: 500 }
-    );
+    const results = STATIC_SCHEMES.map((scheme) => {
+      const match = calculateSchemeMatch(scheme, {});
+      return {
+        scheme,
+        matchScore: match.matchScore,
+        criteria: match.criteria,
+        relevantReasonEn: match.relevantReasonEn,
+        relevantReasonHi: match.relevantReasonHi,
+        relevantReasonMr: match.relevantReasonMr,
+      };
+    });
+    return NextResponse.json({
+      success: true,
+      recommendations: results,
+      totalCount: results.length,
+    });
   }
 }

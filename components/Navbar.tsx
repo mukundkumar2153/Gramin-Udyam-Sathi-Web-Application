@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "./LanguageContext";
@@ -13,7 +13,23 @@ export default function Navbar() {
   const { theme, setTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any | null>(null);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const updateUser = () => {
+      try {
+        const u = localStorage.getItem("user");
+        setCurrentUser(u ? JSON.parse(u) : null);
+      } catch (e) {
+        setCurrentUser(null);
+      }
+    };
+    updateUser();
+
+    window.addEventListener("user-login-change", updateUser);
+    return () => window.removeEventListener("user-login-change", updateUser);
+  }, []);
 
   const navLinks = [
     { href: "/", label: t.navHome, icon: Sprout },
@@ -29,12 +45,12 @@ export default function Navbar() {
     { code: "en", label: "English" },
   ];
 
-  const themes: { id: Theme; nameMr: string; nameEn: string; colorBg: string; icon: any }[] = [
-    { id: "gramin", nameMr: "ग्रामीण (Emerald)", nameEn: "Gramin Emerald", colorBg: "bg-emerald-600", icon: Sprout },
-    { id: "saffron", nameMr: "सुराज्य (Saffron)", nameEn: "Surajya Saffron", colorBg: "bg-amber-500", icon: Sun },
-    { id: "shetkari", nameMr: "शेतकरी (Forest)", nameEn: "Shetkari Green", colorBg: "bg-green-700", icon: Sprout },
-    { id: "neer", nameMr: "नीर (Navy Blue)", nameEn: "Neer Blue", colorBg: "bg-sky-600", icon: Droplets },
-    { id: "dark", nameMr: "रात्रक (Dark Mode)", nameEn: "Ratrak Dark", colorBg: "bg-slate-900", icon: Moon },
+  const themes: { id: Theme; nameMr: string; nameHi: string; nameEn: string; colorBg: string; icon: any }[] = [
+    { id: "gramin", nameMr: "ग्रामीण (Emerald)", nameHi: "ग्रामीण (एमराल्ड)", nameEn: "Gramin Emerald", colorBg: "bg-emerald-600", icon: Sprout },
+    { id: "saffron", nameMr: "सुराज्य (Saffron)", nameHi: "सुराज्य (केसरिया)", nameEn: "Surajya Saffron", colorBg: "bg-amber-500", icon: Sun },
+    { id: "shetkari", nameMr: "शेतकरी (Forest)", nameHi: "शेतकरी (हरा)", nameEn: "Shetkari Green", colorBg: "bg-green-700", icon: Sprout },
+    { id: "neer", nameMr: "नीर (Navy Blue)", nameHi: "नीर (नीला)", nameEn: "Neer Blue", colorBg: "bg-sky-600", icon: Droplets },
+    { id: "dark", nameMr: "रात्रक (Dark Mode)", nameHi: "डार्क मोड", nameEn: "Dark Mode", colorBg: "bg-slate-900", icon: Moon },
   ];
 
   return (
@@ -52,7 +68,7 @@ export default function Navbar() {
                 {t.brandName}
               </span>
               <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 tracking-wide block">
-                Maharashtra • Gramin Portal
+                {language === 'hi' ? "महाराष्ट्र • ग्रामीण पोर्टल" : language === 'mr' ? "महाराष्ट्र • ग्रामीण पोर्टल" : "Maharashtra • Gramin Portal"}
               </span>
             </div>
           </Link>
@@ -90,16 +106,16 @@ export default function Navbar() {
               <button
                 onClick={() => setThemeDropdownOpen(!themeDropdownOpen)}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 rounded-xl text-xs font-bold transition-all border border-slate-200 dark:border-slate-700"
-                title="Change Theme (थीम बदला)"
+                title={t.selectTheme}
               >
                 <Palette className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                <span>थीम (Theme)</span>
+                <span>{t.selectTheme}</span>
               </button>
 
               {themeDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-2 z-50 space-y-1 animate-in fade-in zoom-in-95 duration-150">
                   <div className="px-3 py-1.5 text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                    Select Theme
+                    {t.selectTheme}
                   </div>
                   {themes.map((th) => (
                     <button
@@ -116,7 +132,7 @@ export default function Navbar() {
                     >
                       <div className="flex items-center gap-2">
                         <div className={`w-3.5 h-3.5 rounded-full ${th.colorBg}`} />
-                        <span>{language === 'en' ? th.nameEn : th.nameMr}</span>
+                        <span>{language === 'hi' ? th.nameHi : language === 'mr' ? th.nameMr : th.nameEn}</span>
                       </div>
                       {theme === th.id && <span className="text-emerald-600 dark:text-emerald-400 font-bold">✓</span>}
                     </button>
@@ -143,15 +159,32 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* User Dashboard / Login */}
-            <Link
-              href="/login"
-              prefetch={true}
-              className="flex items-center gap-1.5 px-3 py-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors"
-            >
-              <User className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <span>{t.navLogin}</span>
-            </Link>
+            {/* User Dashboard / Login Button */}
+            {currentUser ? (
+              <Link
+                href="/dashboard"
+                prefetch={true}
+                className="flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-emerald-900 dark:text-emerald-200 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700 rounded-xl hover:bg-emerald-100 transition-colors"
+              >
+                <div className="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[10px]">
+                  {currentUser.profileImage ? (
+                    <img src={currentUser.profileImage} alt="" className="w-full h-full rounded-full object-cover" />
+                  ) : (
+                    (currentUser.name || "U").charAt(0).toUpperCase()
+                  )}
+                </div>
+                <span className="max-w-[90px] truncate">{currentUser.name || t.navDashboard}</span>
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                prefetch={true}
+                className="flex items-center gap-1.5 px-3 py-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50 dark:hover:bg-slate-800 transition-colors"
+              >
+                <User className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <span>{t.navLogin}</span>
+              </Link>
+            )}
 
             <Link
               href="/admin/login"
@@ -212,10 +245,23 @@ export default function Navbar() {
                 </Link>
               );
             })}
+
+            {/* Profile / Login link in mobile menu */}
+            <Link
+              href={currentUser ? "/dashboard" : "/login"}
+              prefetch={true}
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-slate-800"
+            >
+              <User className="w-5 h-5" />
+              <span>{currentUser ? t.navDashboard : t.navLogin}</span>
+            </Link>
           </div>
 
           <div className="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2">
-            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 block">थीम निवडा (Select Theme):</span>
+            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 block">
+              {t.selectTheme}:
+            </span>
             <div className="grid grid-cols-3 gap-1.5">
               {themes.map((th) => (
                 <button
@@ -227,7 +273,7 @@ export default function Navbar() {
                       : "bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700"
                   }`}
                 >
-                  {th.nameMr.split(" ")[0]}
+                  {language === 'en' ? th.nameEn.split(" ")[0] : language === 'hi' ? th.nameHi.split(" ")[0] : th.nameMr.split(" ")[0]}
                 </button>
               ))}
             </div>
