@@ -73,6 +73,8 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+Open [https://gramin-udyam-sathi.onrender.com](https://gramin-udyam-sathi.onrender.com) in your browser.
+
 ---
 
 ## 🔐 Admin Login Credentials
@@ -89,8 +91,3 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 - Mobile drawer navigation & sticky bottom filter modals.
 - Large touchable buttons, high-contrast text, and simple typography.
 
----
-
-## 📄 License & Disclaimer
-
-This project is created for educational and college demonstration purposes. Scheme eligibility and official applications must be verified through official government portals.
